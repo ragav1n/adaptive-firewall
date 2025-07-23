@@ -1,11 +1,15 @@
 # automation/scheduler.py
+
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import schedule
 import time
 import subprocess
 from datetime import datetime
-
-from report.report_generator import generate_pdf_report
-from emailer.send_report import send_report
+from report.report_generator import generate_pdf
+from report.send_email import send_email_with_pdf
 
 def run_full_pipeline():
     print("\n[⏱️] Running full pipeline at:", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
@@ -21,10 +25,10 @@ def run_full_pipeline():
     subprocess.run(["python", "main.py", "enforce"])
 
     # Step 4: Generate report
-    generate_pdf_report()
+    generate_pdf()
 
     # Step 5: Send email
-    send_report()
+    send_email_with_pdf()
 
     print("[✅] Full pipeline run complete.")
 

@@ -2,9 +2,8 @@
 import os
 import csv
 import subprocess
-from fpdf import FPDF
 from datetime import datetime
-
+from fpdf import FPDF
 
 def get_suspicious_ips(table_file="logs/suspicious_ips.txt"):
     try:
@@ -26,7 +25,7 @@ def generate_pdf(summary_file="logs/summary_report.txt",
                  out_pdf="logs/firewall_report.pdf"):
 
     print("[*] Checking input files...")
-    if not (os.path.exists(summary_file)):
+    if not os.path.exists(summary_file):
         print("[!] Missing summary report. PDF not generated.")
         return
 
@@ -45,17 +44,22 @@ def generate_pdf(summary_file="logs/summary_report.txt",
     pdf.add_page()
     pdf.set_font("Helvetica", size=12)
 
+    # Title
     pdf.set_font("Helvetica", style="B", size=16)
     pdf.cell(0, 10, "Adaptive Firewall Summary Report", new_x="LMARGIN", new_y="NEXT", align="C")
     pdf.ln(5)
+
+    # Timestamp
     pdf.set_font("Helvetica", size=12)
     pdf.cell(0, 10, f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(10)
 
+    # Section heading
     pdf.set_font("Helvetica", style="B", size=14)
     pdf.cell(0, 10, "Blocked Suspicious IPs and Reasoning", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(5)
 
+    # IP details
     pdf.set_font("Helvetica", size=11)
 
     for i, ip in enumerate(suspicious_ips):
@@ -68,6 +72,7 @@ def generate_pdf(summary_file="logs/summary_report.txt",
             pdf.multi_cell(0, 7, "No explanation found for this IP.")
         pdf.ln(3)
 
+    # Save PDF
     pdf.output(out_pdf)
     print(f"[📄] PDF report generated: {out_pdf}")
 

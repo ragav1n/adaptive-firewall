@@ -17,11 +17,11 @@ def send_email_with_pdf(
     attachment_path="logs/firewall_report.pdf"
 ):
     # Load config from environment
-    EMAIL_HOST = os.getenv("ALERT_EMAIL_HOST", "smtp.gmail.com")
-    EMAIL_PORT = int(os.getenv("ALERT_EMAIL_PORT", 465))
-    EMAIL_ADDRESS = os.getenv("ALERT_EMAIL_FROM")
-    EMAIL_PASSWORD = os.getenv("ALERT_EMAIL_PASS")
-    TO_EMAIL = to_email or os.getenv("ALERT_EMAIL_TO")
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_PORT = 465
+    EMAIL_ADDRESS = "ragava22005@gmail.com"
+    EMAIL_PASSWORD = "wptchhggucfklmkk"
+    TO_EMAIL = "ragava2702@gmail.com"
 
     # Debug print to verify .env values
     print(f"[DEBUG] Sending from: {EMAIL_ADDRESS} to: {TO_EMAIL}")
